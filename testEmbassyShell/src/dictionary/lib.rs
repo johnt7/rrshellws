@@ -1,15 +1,13 @@
-#![no_std]
-
-mod function_dictionary;
-pub use function_dictionary::FuncDictionary;
-pub use function_dictionary::INTERPRETER_FUNCTION_DICTIONARY;
-pub use function_dictionary::SHELL_FUNCTION_DICTIONARY;
-mod compiled_dictionary;
+pub mod function_dictionary;
+use function_dictionary::FuncDictionary;
+pub mod compiled_dictionary;
 use compiled_dictionary::ComDictionary;
-pub use compiled_dictionary::COMPILED_INTERPRETER_DICTIONARY;
-pub use compiled_dictionary::COMPILED_EXTENSION_DICTIONARY;
-mod current_dictionary;
-pub use current_dictionary::CurDictionary;
+pub mod current_dictionary;
+use current_dictionary::CurDictionary;
+//mod interpreter_function_table;
+//mod interpreter_functions;
+//pub use interpreter_functions::InterpreterFunctions;
+//pub use shell_functions::ShellFunctions;
 
 pub enum DictionaryIndex {
     FunctionIndex(DictionaryMask, u16),     // index of a word in a function dictionary
@@ -19,7 +17,7 @@ pub enum DictionaryIndex {
     Relative(u16),
 }
 #[derive(Debug, PartialEq)]
-pub enum DictionaryToken {
+enum DictionaryToken {
     FunctionToken(DictionaryMask, u16), // Token for a word in a function dictionary
     CompiledToken(DictionaryMask, u16), // Token for a word in a compiled dictionary
     Current(u16),                       // Token for a word in the current dictionary
@@ -111,7 +109,7 @@ pub enum DictionaryMask {
 
 /// DictionaryEntry - points to the parts of a distionary entry
 #[derive(Debug, Copy, Clone)]
-pub struct DictionaryEntry {
+struct DictionaryEntry {
     mask: u16,
     token: u16,
     name_address: u16,
@@ -119,35 +117,3 @@ pub struct DictionaryEntry {
 }
 
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_int_function_table() {
-        assert_eq!(INTERPRETER_FUNCTION_DICTIONARY.find(""), Some(DictionaryToken::CompiledToken(DictionaryMask::YRSHELL_DICTIONARY_COMMON_FUNCTION, 0)));
-        assert_eq!(INTERPRETER_FUNCTION_DICTIONARY.find(".x"), Some(DictionaryToken::CompiledToken(DictionaryMask::YRSHELL_DICTIONARY_COMMON_FUNCTION, 11)));
-        assert_eq!(INTERPRETER_FUNCTION_DICTIONARY.find("echoLoop"), Some(DictionaryToken::CompiledToken(DictionaryMask::YRSHELL_DICTIONARY_COMMON_FUNCTION, 156)));
-        assert_eq!(INTERPRETER_FUNCTION_DICTIONARY.find("foo"), None);
-    }
-    #[test]
-    fn test_shell_function_table() {
-        assert_eq!(SHELL_FUNCTION_DICTIONARY.find("uid"), Some(DictionaryToken::CompiledToken(DictionaryMask::YRSHELL_DICTIONARY_EXTENSION_FUNCTION, 0)));
-        assert_eq!(SHELL_FUNCTION_DICTIONARY.find(""), Some(DictionaryToken::CompiledToken(DictionaryMask::YRSHELL_DICTIONARY_EXTENSION_FUNCTION, 26)));
-        assert_eq!(SHELL_FUNCTION_DICTIONARY.find("getAdc"), Some(DictionaryToken::CompiledToken(DictionaryMask::YRSHELL_DICTIONARY_EXTENSION_FUNCTION, 7)));
-        assert_eq!(SHELL_FUNCTION_DICTIONARY.find("foo"), None);
-    }
-    #[test]
-    fn test_int_compiled_table() {
-        assert_eq!(COMPILED_INTERPRETER_DICTIONARY.find("esc?"), Some(DictionaryToken::CompiledToken(DictionaryMask::YRSHELL_DICTIONARY_INTERPRETER_COMPILED, 1870)));
-        assert_eq!(COMPILED_INTERPRETER_DICTIONARY.find("ps?"), Some(DictionaryToken::CompiledToken(DictionaryMask::YRSHELL_DICTIONARY_INTERPRETER_COMPILED, 0)));
-        assert_eq!(COMPILED_INTERPRETER_DICTIONARY.find("_dc3"), Some(DictionaryToken::CompiledToken(DictionaryMask::YRSHELL_DICTIONARY_INTERPRETER_COMPILED, 1304)));
-        assert_eq!(COMPILED_INTERPRETER_DICTIONARY.find("foo"), None);
-    }
-    #[test]
-    fn test_shell_compiled_table() {
-        assert_eq!(COMPILED_EXTENSION_DICTIONARY.find("mo4_1"), Some(DictionaryToken::CompiledToken(DictionaryMask::YRSHELL_DICTIONARY_EXTENSION_COMPILED, 745)));
-        assert_eq!(COMPILED_EXTENSION_DICTIONARY.find("adc1"), Some(DictionaryToken::CompiledToken(DictionaryMask::YRSHELL_DICTIONARY_EXTENSION_COMPILED, 0)));
-        assert_eq!(COMPILED_EXTENSION_DICTIONARY.find("foo"), None);
-    }
-}

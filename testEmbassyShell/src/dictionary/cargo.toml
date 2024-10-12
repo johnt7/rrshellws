@@ -1,6 +1,6 @@
 [package]
 edition = "2021"
-name = "dictionaries"
+name = "dictionary"
 version = "0.1.0"
 authors = ["John Turner <johnt7_@hotmail.com>"]
 

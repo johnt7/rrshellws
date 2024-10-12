@@ -1,0 +1,55 @@
+@startuml YRSHELL States
+
+title YRSHELL States
+skinparam MaxMessageSize 150
+skinparam sequence {
+    BoxBorderColor White
+    ActorBackgroundColor White
+    ParticipantBackgroundColor White
+    NoteBackgroundColor LightGrey
+}
+
+state YRSHELL_NOT_INITIALIZED : Run init()
+state YRSHELL_INRESET
+state YRSHELL_BEGIN_IDLE
+state YRSHELL_IDLE 
+    YRSHELL_IDLE : echo input if set echo flat set
+state YRSHELL_FILLING_PAD
+state YRSHELL_BEGIN_PARSING
+state YRSHELL_PARSING
+state YRSHELL_COMPILING
+state YRSHELL_EXECUTING
+
+' these are only ever pushed
+state YRSHELL_WAIT_FOR_OUTPUT_SPACE /' something '/
+state YRSHELL_OUTPUT
+state YRSHELL_OUTPUT_STR
+
+[*] --> YRSHELL_NOT_INITIALIZED : default
+YRSHELL_NOT_INITIALIZED --> YRSHELL_INRESET 
+YRSHELL_INRESET --> YRSHELL_BEGIN_IDLE 
+YRSHELL_BEGIN_IDLE --> YRSHELL_IDLE
+YRSHELL_IDLE --> YRSHELL_FILLING_PAD : have input
+YRSHELL_FILLING_PAD --> YRSHELL_BEGIN_PARSING : found end of line
+YRSHELL_BEGIN_PARSING --> YRSHELL_BEGIN_IDLE : null input
+YRSHELL_BEGIN_PARSING --> YRSHELL_PARSING : not :
+YRSHELL_BEGIN_PARSING --> YRSHELL_COMPILING : got :
+YRSHELL_PARSING --> YRSHELL_EXECUTING : end of line when executing
+YRSHELL_EXECUTING --> YRSHELL_BEGIN_IDLE : all tokens executed
+YRSHELL_COMPILING --> YRSHELL_BEGIN_IDLE : end of line
+
+[*] -->  YRSHELL_BEGIN_IDLE : SI_CC_dictionaryClear
+[*] -->  YRSHELL_BEGIN_IDLE : interpretReset( )
+
+
+
+' These are pushes
+ANY --> YRSHELL_WAIT_FOR_OUTPUT_SPACE : pushState()
+ANY <-- YRSHELL_WAIT_FOR_OUTPUT_SPACE : popState()
+ANY --> YRSHELL_WAIT_DELAY : pushState()
+ANY <-- YRSHELL_WAIT_DELAY : popState()
+ANY --> YRSHELL_OUTPUT : pushState()
+ANY <-- YRSHELL_OUTPUT : popState()
+ANY --> YRSHELL_OUTPUT_STR : pushState()
+ANY <-- YRSHELL_OUTPUT_STR : popState()
+@enduml
