@@ -7,7 +7,7 @@ use embassy_stm32::usart::{Config, Uart};
 use embassy_stm32::{bind_interrupts, peripherals, usart};
 use {defmt_rtt as _, panic_probe as _};
 
-mod devshell;
+//mod devshell;
 //mod dictionary;
 //mod logger;
 mod mux;

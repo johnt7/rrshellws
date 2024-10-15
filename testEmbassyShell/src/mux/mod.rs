@@ -6,7 +6,7 @@ use embassy_sync::channel::{Channel, Receiver, Sender};
 use embassy_time::Timer;
 use heapless::Vec;
 
-use super::devshell::DevShell;
+use devshell::DevShell;
 use super::{NUM_SHELLS, Q_DEV_SIZE, Q_SER_SIZE};
 
 pub struct Mux {
