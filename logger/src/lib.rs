@@ -1,3 +1,4 @@
+#![no_std]
 pub struct Logger {}
 
 impl Logger {

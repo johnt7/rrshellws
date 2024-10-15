@@ -9,7 +9,7 @@ use {defmt_rtt as _, panic_probe as _};
 
 mod devshell;
 //mod dictionary;
-mod logger;
+//mod logger;
 mod mux;
 mod st7735;
 mod uart_handler;

@@ -1,6 +1,7 @@
 [workspace]
 resolver = "2"
 members = [ 
-    "dictionaries",
+    "dictionaries", "logger",
     "testEmbassyShell",
+    "logger",
 ]
