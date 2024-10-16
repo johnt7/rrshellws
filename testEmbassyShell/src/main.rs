@@ -10,9 +10,9 @@ use {defmt_rtt as _, panic_probe as _};
 //mod devshell;
 //mod dictionary;
 //mod logger;
-mod mux;
+//mod mux;
 //mod st7735;
-mod uart_handler;
+//mod uart_handler;
 
 bind_interrupts!(struct Irqs {
     UART7 => usart::InterruptHandler<peripherals::UART7>;
