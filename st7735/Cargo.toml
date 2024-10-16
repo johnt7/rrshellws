@@ -1,0 +1,10 @@
+[package]
+name = "st7735"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+defmt = "0.3"
+embassy-stm32 = { version = "0.1.0", path = "../../embassy/embassy-stm32", features = ["defmt", "stm32h723vg", "time-driver-tim2", "exti", "memory-x", "unstable-pac", "chrono"] }
+embassy-sync = { version = "0.6.0", path = "../../embassy/embassy-sync", features = ["defmt"] }
+embassy-time = { version = "0.3.1", path = "../../embassy/embassy-time", features = ["defmt", "defmt-timestamp-uptime", "tick-hz-32_768"] }

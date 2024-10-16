@@ -11,7 +11,7 @@ use {defmt_rtt as _, panic_probe as _};
 //mod dictionary;
 //mod logger;
 mod mux;
-mod st7735;
+//mod st7735;
 mod uart_handler;
 
 bind_interrupts!(struct Irqs {

@@ -3,5 +3,5 @@ resolver = "2"
 members = [ 
     "dictionaries", "logger",
     "testEmbassyShell",
-    "logger", "devshell",
+    "logger", "devshell", "st7735",
 ]
